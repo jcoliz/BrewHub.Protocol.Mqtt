@@ -39,8 +39,7 @@ public class MessageGenerator
         {
             (MessageKind.Data, true) => "DDATA",
             (MessageKind.Data, false) => "NDATA",
-            (MessageKind.Command, true) => "DCMD",
-            (MessageKind.Command, false) => "NCMD",
+            (MessageKind.Command, _) => "NCMD",
             (MessageKind.NodeCommandAll,_) => "NCMD",
             _ => throw new NotImplementedException($"Message Kind {kind} is not implemented.")
         };
