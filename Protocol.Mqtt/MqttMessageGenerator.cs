@@ -37,15 +37,9 @@ public class MessageGenerator
         var iscomponent = !string.IsNullOrEmpty(componentid);
         var mtype = (kind, iscomponent) switch
         {
-            (MessageKind.Data, true) or
-            (MessageKind.Telemetry, true) => "DDATA",
-            
-            (MessageKind.Data, false) or
-            (MessageKind.ReportedProperties, false) => "NDATA",
-            
-            (MessageKind.Command, _) or
-            (MessageKind.DesiredProperties,_) or
-            (MessageKind.NodeCommandAll,_) => "NCMD",
+            (MessageKind.Data or MessageKind.Telemetry or MessageKind.ReportedProperties, true) => "DDATA",            
+            (MessageKind.Data or MessageKind.Telemetry or MessageKind.ReportedProperties, false) => "NDATA",            
+            (MessageKind.Command or MessageKind.DesiredProperties or MessageKind.NodeCommandAll, _) => "NCMD",
 
             _ => throw new NotImplementedException($"Message Kind {kind} is not implemented.")
         };
