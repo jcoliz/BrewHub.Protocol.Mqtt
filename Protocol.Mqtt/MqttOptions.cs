@@ -11,7 +11,7 @@ public class MqttOptions
 
     public int Port { get; set; } = 1883;
 
-    public string Topic { get; set; } = "brewhub;1";
+    public string Topic { get; set; } = "brewhub;2";
 
     public string Site { get; set; } = "none";
 

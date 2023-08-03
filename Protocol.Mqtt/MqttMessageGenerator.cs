@@ -35,17 +35,16 @@ public class MessageGenerator
             throw new ApplicationException("No MQTT options configured");
 
         var iscomponent = !string.IsNullOrEmpty(componentid);
-        var mtype = (kind, iscomponent) switch
+        var mtype = kind switch
         {
-            (MessageKind.Data or MessageKind.Telemetry or MessageKind.ReportedProperties, true) => "DDATA",            
-            (MessageKind.Data or MessageKind.Telemetry or MessageKind.ReportedProperties, false) => "NDATA",            
-            (MessageKind.Command or MessageKind.DesiredProperties or MessageKind.NodeCommandAll, _) => "NCMD",
-
+            MessageKind.Telemetry => "Telemetry",
+            MessageKind.ReportedProperties => "Property",
+            MessageKind.Command => "Command",
             _ => throw new NotImplementedException($"Message Kind {kind} is not implemented.")
         };
         var topicdeviceid = deviceid ?? _options!.ClientId;
 
-        var topic = $"{_options.Topic}/{_options.Site}/{mtype}/{topicdeviceid}" + (iscomponent ? $"/{componentid}" : string.Empty) + (kind == MessageKind.NodeCommandAll ? "/#" : string.Empty);
+        var topic = $"{_options.Topic}/{_options.Site}/{mtype}/{topicdeviceid}" + (iscomponent ? $"/{componentid}" : string.Empty);
 
         return topic;
    }
