@@ -4,6 +4,8 @@ BrewHub.Net is an IoT reference architecture using .NET-based device software, I
 
 More details: [BrewHub.Edge](https://github.com/jcoliz/BrewHub.Edge)
 
+![BrewHub MQTT](./docs/images/BewHub-MQTT-Protocol.png)
+
 ## What's Here: MQTT protocol definition and construction 
 
 The BrewHub.Net protocol is 100% [IoT Plug and Play compatible](https://learn.microsoft.com/en-us/azure/iot-develop/overview-iot-plug-and-play), while taking inspiration from [Eclipse Sparkplug](https://sparkplug.eclipse.org/). Familiarity with those standards will be helpful in understanding this protocol.
@@ -27,7 +29,7 @@ Device and component models specify the 'metrics' that the underlying software o
 * **Properties**. Current-state information about the unit. These are usually not aggregated for display; instead, the most recent value is the relevant visualization.
 * **Commands**. Instructions to the device or component on action it should take, e.g. reboot the device, or provide a history report.
 
-Properties can be further divided into read-only and writable properties. Importantly, the state of writable properties is owned by the upstream system, not the device. If a system administrator sets a writable property, the device is expected to comply,
+Properties can be further divided into read-only and writable properties. Importantly, the state of writable properties is owned by the upstream system, not the device. If a system administrator sets a writable property, the device is expected to comply, and submit a property update when the change has been successfully applied.
 
 ### MQTT Topic
 
@@ -41,11 +43,11 @@ The MQTT topic is structured this way:
 
 Let's consider each of those in detail
 
-* **Protocol**: The latest protocol/version is "brewhub;2"
+* **Protocol**: The latest protocol/version is `brewhub;2`
 * **Site**: Optional marker to distinguish between physical locations within the same organization. Use `none` if there is only one site in the organization
 * **Message Type**: What kind of metrics are sent in the message
 * **Device**: MQTT client ID of the device sending the message
-* **Component**: Optionally, name of component originating the metrics contained in the message, matching the component name in the model definition
+* **Component**: Name of component originating the metrics contained in the message, matching the component name in the model definition. For metrics on the device, this part is omitted.
 
 For example:
 
